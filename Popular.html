@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="in">
+<head>
+  <title>Related post</title>
+<style>
+.PopularPosts ul{background:#fff;list-style:none;margin:0;padding:5px 5px 10px;overflow:hidden;border-radius:0 0 5px 5px;border-top:none;}
+.PopularPosts li,.PopularPosts li amp-img,.PopularPosts li a,.PopularPosts li a amp-img {margin:0;padding:0;list-style:none;border:none;background:none;outline:none;}
+.PopularPosts ul {margin:0;list-style:none;color:#64707a;}
+.PopularPosts ul li amp-img {display: flex;align-items:center;display:block;width:auto;height:100%}
+.PopularPosts ul li .item-thumbnail {display:block;margin:0 0 0 10px;width:65px;height:65px;border:1px solid #f5f5f5;overflow:hidden;float:right;border-radius:5px ;background-position:center;transition:all 0.5s ease-out}
+.PopularPosts ul li .item-thumbnail:hover{-webkit-filter:brightness(0.4);transition:all 0.5s ease-out}
+.PopularPosts ul li {background-color:#fff;margin:0;padding:10px 0;padding-right:5px;position:relative;border-bottom:1px solid #f5f5f5;transition:all .3s;display:block;min-height:67px}
+.PopularPosts ul li:first-child {border-top:none;}
+.PopularPosts ul li:last-child {border-bottom:none;}
+.PopularPosts ul li a:hover {color:#4285f4;}
+.PopularPosts ul li .item-title a, .PopularPosts ul li a {color:#000;transition:all .3s;display:block;height:100%;}
+  .PopularPosts ul li:hover {border-left: 3px solid blue;padding-left: 2px;}
+.PopularPosts .widget-content ul li:hover a,.PopularPosts .widget-content ul li a:hover{color:#4285f4;}
+.PopularPosts .item-snippet{display:none}
+.profile-img{display:inline;opacity:1;margin:0 6px 3px 0;}
+.PopularPosts .item-title {padding-bottom:.2em;padding:0 5px;}
+</style>
+</head>
+<body>
+<div class='widget-content popular-posts'>
+    <ul>
+      <b:loop values='data:posts' var='post'>
+      <li>
+        <b:if cond='!data:showThumbnails'>
+          <b:if cond='!data:showSnippets'>
+            <!-- (1) No snippet/thumbnail -->
+            <a expr:href='data:post.href'><data:post.title/></a>
+          <b:else/>
+             <!-- (2) Show only snippets -->
+            <div class='item-title'><a expr:href='data:post.href'><data:post.title/></a></div>
+            <div class='item-snippet'><data:post.snippet/></div>
+          </b:if>
+        <b:else/>
+          <!-- (3) Show only thumbnails or (4) Snippets and thumbnails. -->
+          <div expr:class='data:showSnippets ? &quot;item-content&quot; : &quot;item-thumbnail-only&quot;'>
+            <b:if cond='data:post.featuredImage.isResizable or data:post.thumbnail'>
+              <div class='item-thumbnail'>
+                <a expr:href='data:post.href' target='_blank'>
+                  <b:with value='data:post.featuredImage.isResizable                                  ? resizeImage(data:post.featuredImage, 72, &quot;1:1&quot;)                                  : data:post.thumbnail' var='image'>
+                    <img alt='' border='0' expr:src='data:image'/>
+                  </b:with>
+                </a>
+              </div>
+            </b:if>
+            <div class='item-title'><a expr:href='data:post.href'><data:post.title/></a></div>
+            <b:if cond='data:showSnippets'>
+              <div class='item-snippet'><data:post.snippet/></div>
+            </b:if>
+          </div>
+          <div style='clear: both;'/>
+        </b:if>
+      </li>
+      </b:loop>
+    </ul>
+    <b:include name='quickedit'/>
+  </div>
+</body>
+</html>
